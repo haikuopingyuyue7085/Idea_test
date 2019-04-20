@@ -1,4 +1,4 @@
-app.controller('itemController' ,function($scope){
+app.controller('itemController' ,function($scope,$http){
   
   //商品数量+-
   $scope.num=1;//初始为1
@@ -56,8 +56,25 @@ app.controller('itemController' ,function($scope){
 	}
 	$scope.sku={id:0,title:'-----',price:0};//如果没有匹配
 	}
+
 	//模拟添加购物车
-	$scope.addToCar=function(){
+	/*$scope.addToCar=function(){
 		alert("skuId:" +$scope.sku.id);
-	}
+	}*/
+
+	//添加购物车,客户端也要设置跨域信息
+    $scope.addToCart=function(){
+        $http.get('http://localhost:9107/cart/addGoodsToCartList.do?itemId='
+            + $scope.sku.id +'&num='+$scope.num,{'withCredentials':true}).success(
+            function(response){
+                if(response.success){
+                    location.href='http://localhost:9107/cart.html';//跳转到购物车页面
+                }else{
+                    alert(response.message);
+                }
+            }
+        );
+
+    }
+
 });

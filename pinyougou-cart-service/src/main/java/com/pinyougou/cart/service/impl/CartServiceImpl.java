@@ -85,7 +85,7 @@ public class CartServiceImpl implements CartService {
        }
         return cartList;
     }
-    //向redis取购物车数据
+    //向redis存购物车数据
     @Override
     public void saveCartListToRedis(String username, List<Cart> itemList) {
         redisTemplate.boundHashOps("cartList").put(username,itemList);

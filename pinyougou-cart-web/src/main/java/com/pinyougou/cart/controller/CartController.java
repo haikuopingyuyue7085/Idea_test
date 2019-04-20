@@ -56,9 +56,13 @@ public class CartController {
         }
     }
 
-
+    //@CrossOrigin(origins="http://localhost:9105",allowCredentials="true")//可省略,缺省allowCredentials="true"
     @RequestMapping("/addGoodsToCartList")
     public Result addGoodsToCartList(Long itemId,Integer num){
+
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:9105");
+       response.setHeader("Access-Control-Allow-Credentials", "true");
+
 
         try {
             //1,从cookie中拿出购物车(判断有没有cookie)

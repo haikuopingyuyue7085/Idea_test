@@ -1,26 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>pinyougou-parent</artifactId>
         <groupId>com.pinyougou</groupId>
+        <artifactId>pinyougou-parent</artifactId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>pinyougou-page-web</artifactId>
+    <artifactId>pinyougou-order-service</artifactId>
     <packaging>war</packaging>
 
-    <name>pinyougou-page-web</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-    </properties>
 
     <dependencies>
 
@@ -57,9 +45,19 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
         </dependency>
-        <!-- dubbo相关,解耦不需要zookeeper了 -->
-
-
+        <!-- dubbo相关 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.sgroschupf</groupId>
+            <artifactId>zkclient</artifactId>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -89,23 +87,14 @@
         </dependency>
         <dependency>
             <groupId>com.pinyougou</groupId>
-            <artifactId>pinyougou-page-interface</artifactId>
+            <artifactId>pinyougou-order-interface</artifactId>
             <version>0.0.5-SNAPSHOT</version>
         </dependency>
-
         <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
+            <groupId>com.pinyougou</groupId>
+            <artifactId>pinyougou-common</artifactId>
+            <version>0.0.5-SNAPSHOT</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-client</artifactId>
-            <version>5.13.4</version>
-        </dependency>
-
-
-
     </dependencies>
 
     <build>
@@ -116,11 +105,12 @@
                 <version>2.2</version>
                 <configuration>
                     <!-- 指定端口 -->
-                    <port>9105</port>
+                    <port>9008</port>
                     <!-- 请求路径 -->
                     <path>/</path>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
 </project>

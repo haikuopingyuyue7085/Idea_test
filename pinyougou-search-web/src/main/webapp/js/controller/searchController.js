@@ -27,7 +27,7 @@ app.controller('searchController',function($scope,$location,searchService){
         $scope.endDot=true;//后面有点...
 
         //分页栏下标随着点击当前页页码的变化而变化
-        if($scope.resultMap.totalPages>5){//总页数小于5则显示前5页即可
+        if($scope.resultMap.totalPages>5){//总页数大于5则显示前5页即可
             if($scope.searchMap.pageNo<=3){//当前页码小于3则显示前5页,1-5
                 lastPage=5;
                 $scope.firstDot=false;

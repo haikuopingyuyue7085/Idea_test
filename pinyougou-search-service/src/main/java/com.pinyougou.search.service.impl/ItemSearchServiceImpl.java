@@ -1,10 +1,8 @@
 package com.pinyougou.search.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.alibaba.dubbo.config.annotation.Service;
+import com.pinyougou.pojo.TbItem;
+import com.pinyougou.search.service.ItemSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -13,9 +11,10 @@ import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
 import org.springframework.data.solr.core.query.result.*;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.pinyougou.pojo.TbItem;
-import com.pinyougou.search.service.ItemSearchService;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 @Service(timeout=5000)//允许超时时间
 public class ItemSearchServiceImpl implements ItemSearchService {
 
@@ -120,12 +119,12 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         String sortValue= (String) searchMap.get("sort");
         String sortField = (String) searchMap.get("sortField");
         if(sortValue!=null&&!sortField.equals("")){
-            //降序
+            //升序
             if(sortValue.equals("ASC")){
                     Sort sort=new Sort(Sort.Direction.ASC,"item_"+sortField);//升序,哪个字段
                     query.addSort(sort);
             }
-            //升序
+            //降序
            if(sortValue.equals("DESC")){
                    Sort sort=new Sort(Sort.Direction.DESC,"item_"+sortField);//降序,哪个字段
                    query.addSort(sort);
@@ -135,8 +134,9 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
         //-----------------------------查完设置高亮---------------------------
         HighlightPage<TbItem> page = solrTemplate.queryForHighlightPage(query, TbItem.class);
-        for(HighlightEntry<TbItem> h: page.getHighlighted()){//循环高亮入口集合
+        for(HighlightEntry<TbItem> h: page.getHighlighted()){//循环高亮入口集合(遍历所有高亮域,可能存在多值)
             TbItem item = h.getEntity();//获取原实体类
+            //得到第一个域的第一个值得高亮
             if(h.getHighlights().size()>0 && h.getHighlights().get(0).getSnipplets().size()>0){
                 item.setTitle(h.getHighlights().get(0).getSnipplets().get(0));//设置高亮的结果
             }
